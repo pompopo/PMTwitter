@@ -20,7 +20,6 @@ typedef void (^PMFailBlock)(NSError *error);
 
 - (id)initWithAccount:(ACAccount *)account;
 - (id)initWithToken:(NSString *)token secret:(NSString *)secret;
-- (void)homeTimeline;
 - (void)showUser:(NSString *)screenName
          succeed:(PMUserBlock)succeed
             fail:(PMFailBlock)fail;

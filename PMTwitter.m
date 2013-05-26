@@ -31,28 +31,11 @@
 
     return [self initWithAccount:account];
 }
-- (void)homeTimeline {
-    SLRequest *request = [SLRequest requestForServiceType:SLServiceTypeTwitter
-                                            requestMethod:SLRequestMethodGET
-                                                      URL:[NSURL URLWithString:@"https://api.twitter.com/1.1/statuses/home_timeline.json"]
-                                               parameters:nil];
-    request.account = self.account;
-    [request performRequestWithHandler:^(NSData *responseData, NSHTTPURLResponse *urlResponse, NSError *error) {
-        NSArray *array = [NSJSONSerialization JSONObjectWithData:responseData
-                                                         options:0
-                                                           error:nil];
-        for (NSDictionary *dict in array) {
-            PMStatus *status = [[PMStatus alloc] initWithDictionary:dict];
-            NSLog(@"status = %@", status.text);
-
-        }
-    }];
-}
 
 - (void)showUser:(NSString *)screenName
          succeed:(PMUserBlock)succeed
             fail:(PMFailBlock)fail {
-    NSURL *url = [NSURL URLWithString:@"https://api.twitter.com/1.1/user/show.json"];
+    NSURL *url = [NSURL URLWithString:@"https://api.twitter.com/1.1/users/show.json"];
     NSDictionary *parameters = @{
             @"screen_name" : screenName
     };
@@ -76,6 +59,7 @@
     [request performRequestWithHandler:handler];
 }
 
+#pragma mark - private methods
 // for APIs return only User
 - (void)_requestWithURL:(NSURL *)url
           requestMethod:(SLRequestMethod)method
